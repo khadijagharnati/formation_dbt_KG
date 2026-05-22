@@ -34,4 +34,4 @@ models:
       - name: amount
         description: "Montant la commande."
         tests:
-          - is_positive
+          - is_positive:
