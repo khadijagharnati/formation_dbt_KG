@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: "Modèle transformant les commandes brutes avec mise en majuscule du statut et formatage des dates."
+    columns:
+      - name: order_id
+        description: "Identifiant unique de la commande."
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: "Identifiant de l'client ayant passé la commande."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+              config:
+                severity: warn
+
+      - name: status
+        description: "Statut de la commande (converti en majuscules)."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['REFUNDED', 'PENDING', 'COMPLETED', 'CANCELLED']
+
+      - name: order_date
+        description: "Date de création de la commande (format DATE)."
+
+      - name: amount
+        description: "Montant la commande."
+        tests:
+          - is_positive

@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: duckdb_source
+    description: "Template for DuckDB source configuration"
+    schema: main  # Default schema in DuckDB is 'main'
+    
+    tables:
+      - name: raw_customers
+        description: "Customers raw data"
+        columns:
+          - name: customer_id
+            -tests:
+              - not null
+              - unique
+
+      - name: raw_orders
+        description: "Orders raw data"
+
+      - name: raw_products
+        description: "Products raw data"
